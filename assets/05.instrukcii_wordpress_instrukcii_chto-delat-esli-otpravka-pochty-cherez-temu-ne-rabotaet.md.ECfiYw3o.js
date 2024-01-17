@@ -1,0 +1,12 @@
+import{_ as e,c as t,m as s,a as n,t as p,U as i,o as r}from"./chunks/framework.UPTPDIz5.js";const o="/assets/Screenshot_1 (3).STl14Iic.jpg",$=JSON.parse('{"title":"Что делать, если отправка почты через тему не работает?","description":"","frontmatter":{"title":"Что делать, если отправка почты через тему не работает?"},"headers":[],"relativePath":"05.instrukcii/wordpress/instrukcii/chto-delat-esli-otpravka-pochty-cherez-temu-ne-rabotaet.md","filePath":"05.instrukcii/wordpress/instrukcii/chto-delat-esli-otpravka-pochty-cherez-temu-ne-rabotaet.md"}'),c={name:"05.instrukcii/wordpress/instrukcii/chto-delat-esli-otpravka-pochty-cherez-temu-ne-rabotaet.md"},l={id:"frontmatter-title",tabindex:"-1"},_=s("a",{class:"header-anchor",href:"#frontmatter-title","aria-label":'Permalink to "{{ $frontmatter.title }}"'},"​",-1),d=i(`<p>Отправку почты для вашего сайта можно настроить через стандартную функцию почты в WordPress. Для этого необходимо в файл custom_functions.php добавить следующий код:</p><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code"><code><span class="line"><span>&lt;?php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>add_action(&#39;mailer_before_send_mail&#39;, &#39;mailer_before_send_mail&#39;, 10, 5);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>function mailer_before_send_mail($to, $subject, $message, $result, $post_data){</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    wp_mail( $to, $subject, $message, [&#39;content-type: text/html&#39;] );</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    $result[&#39;status&#39;] = &#39;success&#39;;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    exit(json_encode($result));</span></span>
+<span class="line"><span>}</span></span></code></pre></div><p>При этом для работы функции требуется установка плагина <a href="https://ru.wordpress.org/plugins/easy-wp-smtp/" target="_blank" rel="noreferrer">Easy WP SMTP</a> и его небольшая настройка.</p><figure><img src="`+o+'" alt=""><figcaption></figcaption></figure>',4);function h(a,m,u,f,g,k){return r(),t("div",null,[s("h1",l,[n(p(a.$frontmatter.title)+" ",1),_]),d])}const v=e(c,[["render",h]]);export{$ as __pageData,v as default};

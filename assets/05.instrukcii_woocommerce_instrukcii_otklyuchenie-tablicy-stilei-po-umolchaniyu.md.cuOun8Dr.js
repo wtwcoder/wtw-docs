@@ -1,0 +1,47 @@
+import{_ as a,c as e,m as s,a as p,t as l,U as t,o as i}from"./chunks/framework.UPTPDIz5.js";const g=JSON.parse('{"title":"Отключение таблицы стилей по умолчанию","description":"","frontmatter":{"title":"Отключение таблицы стилей по умолчанию"},"headers":[],"relativePath":"05.instrukcii/woocommerce/instrukcii/otklyuchenie-tablicy-stilei-po-umolchaniyu.md","filePath":"05.instrukcii/woocommerce/instrukcii/otklyuchenie-tablicy-stilei-po-umolchaniyu.md"}'),c={name:"05.instrukcii/woocommerce/instrukcii/otklyuchenie-tablicy-stilei-po-umolchaniyu.md"},o={id:"frontmatter-title",tabindex:"-1"},r=s("a",{class:"header-anchor",href:"#frontmatter-title","aria-label":'Permalink to "{{ $frontmatter.title }}"'},"​",-1),u=t(`<p>Вам необходимо добавить код в файл functions.php дочерней темы или через плагин, который позволяет добавлять пользовательские функции, например плагин Code snippets.</p><p>Пожалуйста, не добавляйте собственный код непосредственно в файл functions.php родительской темы,поскольку он будет полностью удален при обновлении темы.</p><h3 id="отключение-всех-таблиц-стилеи" tabindex="-1">Отключение всех таблиц стилей <a class="header-anchor" href="#отключение-всех-таблиц-стилеи" aria-label="Permalink to &quot;Отключение всех таблиц стилей&quot;">​</a></h3><p>По умолчанию, WooCommerce подключает 3 таблицы стилей. Вы можете отключить их все с помощью следующего фрагмента:</p><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code"><code><span class="line"><span>add_filter (&#39;woocommerce_enqueue_styles&#39;, &#39;__return_empty_array&#39;);</span></span></code></pre></div><p>Это рекомендуемый процесс, если вы создаете собственную тему. Удаление стандартной таблицы стилей WooCommerce и назначение вашей собственной защитит вас во время основных обновлений WooCommerce.</p><h3 id="отключение-определенных-таблиц-стилеи" tabindex="-1">Отключение определенных таблиц стилей <a class="header-anchor" href="#отключение-определенных-таблиц-стилеи" aria-label="Permalink to &quot;Отключение определенных таблиц стилей&quot;">​</a></h3><p>Если вы хотите отключить определенные таблицы стилей (то есть, если вы не хотите включать портативную таблицу стилей), вы можете использовать следующее:</p><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code"><code><span class="line"><span>/**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span> * Set WooCommerce image dimensions upon theme activation</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span> */</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Удаляем стили один за одним</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>add_filter( &#39;woocommerce_enqueue_styles&#39;, &#39;jk_dequeue_styles&#39; );</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>function jk_dequeue_styles( $enqueue_styles ) {</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	unset( $enqueue_styles[&#39;woocommerce-general&#39;] );	// Удаляем основные стили</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	unset( $enqueue_styles[&#39;woocommerce-layout&#39;] );		// Удаляем стили макета</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	unset( $enqueue_styles[&#39;woocommerce-smallscreen&#39;] );	// Удаляем оптимизацию для маленьких экранов</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	return $enqueue_styles;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Или удаляем все стили одной строкой</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>add_filter( &#39;woocommerce_enqueue_styles&#39;, &#39;__return_false&#39; );</span></span></code></pre></div><p>Затем поставьте в очередь свою собственную таблицу стилей, например:</p><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code"><code><span class="line"><span>/**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span> * Удаление таблицы стилей вашей темы</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span> */</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>function wp_enqueue_woocommerce_style(){</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	wp_register_style( &#39;название-вашей-темы-woocommerce&#39;, get_template_directory_uri() . &#39;/css/woocommerce.css&#39; );</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	if ( class_exists( &#39;woocommerce&#39; ) ) {</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>		wp_enqueue_style( &#39;название-вашей-темы-woocommerce&#39; );</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>add_action( &#39;wp_enqueue_scripts&#39;, &#39;wp_enqueue_woocommerce_style&#39; );</span></span></code></pre></div>`,11);function m(n,_,d,h,y,k){return i(),e("div",null,[s("h1",o,[p(l(n.$frontmatter.title)+" ",1),r]),u])}const b=a(c,[["render",m]]);export{g as __pageData,b as default};
